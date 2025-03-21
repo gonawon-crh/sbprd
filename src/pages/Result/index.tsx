@@ -159,15 +159,46 @@ const Result = () => {
         </div>
       </div>
 
-      <div style={{ marginBottom: '32px', background: '#fff', padding: '24px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
+      <div style={{ marginBottom: '32px', background: '#fff', padding: '24px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', overflow: 'hidden' }}>
         <Title level={3} style={{ marginBottom: '24px' }}>养老金发放明细</Title>
         <Table
-          columns={columns}
+          columns={[
+            { title: '年份', dataIndex: 'year', key: 'year', fixed: 'left', width: 80 },
+            {
+              title: '上年度社会平均工资',
+              dataIndex: 'socialAverageSalary',
+              key: 'socialAverageSalary',
+              width: 160,
+              render: (value: number) => `${value.toLocaleString()}(预估)`
+            },
+            {
+              title: '基础养老金',
+              dataIndex: 'basicPension',
+              key: 'basicPension',
+              width: 120,
+              render: (value: number) => value.toLocaleString()
+            },
+            {
+              title: '个人账户养老金',
+              dataIndex: 'personalAccountPension',
+              key: 'personalAccountPension',
+              width: 140,
+              render: (value: number) => value.toLocaleString()
+            },
+            {
+              title: '月退休工资',
+              dataIndex: 'monthlyPension',
+              key: 'monthlyPension',
+              width: 120,
+              render: (value: number) => value.toLocaleString()
+            }
+          ]}
           dataSource={calculatePensionDetails()}
           rowKey="year"
           pagination={false}
-          scroll={{ x: true, y: 'calc(100vh - 600px)' }}
-          style={{ overflowX: 'auto' }}
+          scroll={{ x: 'max-content', y: 'calc(100vh - 600px)' }}
+          sticky
+          bordered
         />
       </div>
 

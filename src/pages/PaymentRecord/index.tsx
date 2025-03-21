@@ -255,7 +255,7 @@ const PaymentRecord = () => {
             rowKey="year"
             pagination={false}
             bordered
-            scroll={{ x: 'max-content', y: 500 }}
+            scroll={{ x: 'max-content', y: 'calc(100vh - 250px)' }}
             sticky
           />
         </div>
