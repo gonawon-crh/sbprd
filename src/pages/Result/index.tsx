@@ -88,7 +88,8 @@ const Result = () => {
     const pensionPaymentMonths = getPensionPaymentMonths();
     const details: PensionDetail[] = [];
 
-    let prevYearSalary = paymentRecords[paymentRecords.length - 1].socialAverageSalary;
+    // 获取最近一年的社会平均工资作为基数
+    let prevYearSalary = SOCIAL_AVERAGE_SALARY[retirementYear - 1] || SOCIAL_AVERAGE_SALARY[2024];
 
     for (let year = retirementYear; year < retirementYear + 20; year++) {
       const basicPension = Math.round(
@@ -144,17 +145,17 @@ const Result = () => {
       
       <div style={{ marginBottom: '32px', background: '#f5f5f5', padding: '24px', borderRadius: '8px' }}>
         <Title level={3} style={{ marginBottom: '24px' }}>基本信息</Title>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
-          <Text>性别：{userInfo.gender === 'male' ? '男' : '女'}</Text>
-          <Text>参加工作：{userInfo.workStartDate}</Text>
-          <Text>出生日期：{userInfo.birthDate}</Text>
-          <Text>退休时间：{calculateRetirementDate()}</Text>
-          <Text>累计缴费月数：{calculateTotalPaymentMonths()}个月</Text>
-          <Text>缴费年数：{calculatePaymentYears()}年</Text>
-          <Text>基础养老金总额：{calculateBasicPensionTotal()}元</Text>
-          <Text>个人养老金总额：{calculatePersonalPensionTotal()}元</Text>
-          <Text>平均缴费指数：{calculateAveragePaymentIndex()}</Text>
-          <Text>养老金计发月数：{getPensionPaymentMonths()}个月</Text>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', fontSize: '16px' }}>
+          <Text strong>性别：<Text>{userInfo.gender === 'male' ? '男' : '女'}</Text></Text>
+          <Text strong>参加工作：<Text>{userInfo.workStartDate}</Text></Text>
+          <Text strong>出生日期：<Text>{userInfo.birthDate}</Text></Text>
+          <Text strong>退休时间：<Text>{calculateRetirementDate()}</Text></Text>
+          <Text strong>累计缴费月数：<Text>{calculateTotalPaymentMonths()}个月</Text></Text>
+          <Text strong>缴费年数：<Text>{calculatePaymentYears()}年</Text></Text>
+          <Text strong>基础养老金总额：<Text>{calculateBasicPensionTotal().toLocaleString()}元</Text></Text>
+          <Text strong>个人养老金总额：<Text>{calculatePersonalPensionTotal().toLocaleString()}元</Text></Text>
+          <Text strong>平均缴费指数：<Text>{calculateAveragePaymentIndex()}</Text></Text>
+          <Text strong>养老金计发月数：<Text>{getPensionPaymentMonths()}个月</Text></Text>
         </div>
       </div>
 

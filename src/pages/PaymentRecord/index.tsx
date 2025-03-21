@@ -142,20 +142,22 @@ const PaymentRecord = () => {
   };
 
   const columns = [
-    { title: '年份', dataIndex: 'year', key: 'year', align: 'center' },
+    { title: '年份', dataIndex: 'year', key: 'year', align: 'center', width: 80 },
     {
       title: '社会平均工资',
       dataIndex: 'socialAverageSalary',
       key: 'socialAverageSalary',
       align: 'center',
+      width: 140,
       render: (value: number, record: PaymentRecord) =>
-        `${value}${record.year > 2024 ? '(预估)' : ''}`
+        `${value.toLocaleString()}${record.year > 2024 ? '(预估)' : ''}`
     },
     {
       title: '缴费月数',
       dataIndex: 'paymentMonths',
       key: 'paymentMonths',
       align: 'center',
+      width: 100,
       render: (_: any, record: PaymentRecord, index: number) => (
         <InputNumber
           min={0}
@@ -165,7 +167,7 @@ const PaymentRecord = () => {
             const newValue = value === null ? 0 : value;
             updateRecord(index, { paymentMonths: newValue });
           }}
-          style={{ width: '100%' }}
+          style={{ width: '90%' }}
         />
       )
     },
@@ -173,10 +175,16 @@ const PaymentRecord = () => {
       title: '月工资',
       dataIndex: 'monthlySalary',
       key: 'monthlySalary',
+      width: 120,
+      align: 'center',
       render: (_: any, record: PaymentRecord, index: number) => (
         <InputNumber
+          min={0}
           value={record.monthlySalary}
           onChange={(value) => updateRecord(index, { monthlySalary: value || 0 })}
+          style={{ width: '90%' }}
+          formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          parser={value => value!.replace(/\$\s?|(,*)/g, '')}
         />
       )
     },
@@ -184,17 +192,25 @@ const PaymentRecord = () => {
       title: '年缴费总额',
       dataIndex: 'yearlyPayment',
       key: 'yearlyPayment',
+      width: 120,
+      align: 'center',
       render: (_: any, record: PaymentRecord, index: number) => (
         <InputNumber
+          min={0}
           value={record.yearlyPayment}
           onChange={(value) => updateRecord(index, { yearlyPayment: value || 0 })}
+          style={{ width: '90%' }}
+          formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          parser={value => value!.replace(/\$\s?|(,*)/g, '')}
         />
       )
     },
     {
       title: '当年缴费指数',
       dataIndex: 'paymentIndex',
-      key: 'paymentIndex'
+      key: 'paymentIndex',
+      width: 120,
+      align: 'center'
     },
     {
       title: '操作',
