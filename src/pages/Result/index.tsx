@@ -140,12 +140,12 @@ const Result = () => {
   ];
 
   return (
-    <div style={{ padding: '24px', maxWidth: '1200px', margin: '0 auto', height: '100vh', overflowY: 'auto' }}>
+    <div style={{ padding: '24px', maxWidth: '1200px', margin: '0 auto', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Title level={2} style={{ textAlign: 'center', marginBottom: '32px', paddingTop: '24px' }}>养老金计算结果</Title>
       
-      <div style={{ marginBottom: '32px', background: '#f5f5f5', padding: '24px', borderRadius: '8px' }}>
+      <div style={{ marginBottom: '32px', background: '#f5f5f5', padding: '24px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
         <Title level={3} style={{ marginBottom: '24px' }}>基本信息</Title>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px', fontSize: '16px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '16px', fontSize: '16px' }}>
           <Text strong>性别：<Text>{userInfo.gender === 'male' ? '男' : '女'}</Text></Text>
           <Text strong>参加工作：<Text>{userInfo.workStartDate}</Text></Text>
           <Text strong>出生日期：<Text>{userInfo.birthDate}</Text></Text>
@@ -159,19 +159,19 @@ const Result = () => {
         </div>
       </div>
 
-      <div style={{ marginBottom: '32px' }}>
+      <div style={{ marginBottom: '32px', background: '#fff', padding: '24px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
         <Title level={3} style={{ marginBottom: '24px' }}>养老金发放明细</Title>
         <Table
           columns={columns}
           dataSource={calculatePensionDetails()}
           rowKey="year"
           pagination={false}
-          scroll={{ x: true }}
+          scroll={{ x: true, y: 'calc(100vh - 600px)' }}
           style={{ overflowX: 'auto' }}
         />
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginTop: '32px' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginTop: 'auto', paddingTop: '32px' }}>
         <Button size="large" onClick={() => navigate('/payment-record')}>
           返回修改
         </Button>

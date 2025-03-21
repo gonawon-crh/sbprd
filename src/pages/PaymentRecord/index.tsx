@@ -1,9 +1,9 @@
-import { Button, Form, Input, InputNumber, Table, Typography, Upload, message } from 'antd';
+import { Button, InputNumber, Table, Typography, Upload } from 'antd';
 import { UploadOutlined, DownloadOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../store';
 import * as XLSX from 'xlsx';
-import dayjs from 'dayjs';
+
 import { useEffect } from 'react';
 
 const { Title } = Typography;
@@ -142,13 +142,13 @@ const PaymentRecord = () => {
   };
 
   const columns = [
-    { title: '年份', dataIndex: 'year', key: 'year', align: 'center', width: 80 },
+    { title: '年份', dataIndex: 'year', key: 'year', align: 'center' as const, width: 80, fixed: 'left' as const },
     {
       title: '社会平均工资',
       dataIndex: 'socialAverageSalary',
       key: 'socialAverageSalary',
-      align: 'center',
-      width: 140,
+      align: 'center' as const,
+      width: 140, fixed: 'left' as const,
       render: (value: number, record: PaymentRecord) =>
         `${value.toLocaleString()}${record.year > 2024 ? '(预估)' : ''}`
     },
@@ -156,11 +156,11 @@ const PaymentRecord = () => {
       title: '缴费月数',
       dataIndex: 'paymentMonths',
       key: 'paymentMonths',
-      align: 'center',
-      width: 100,
+      align: 'center' as const,
+      width: 100, fixed: 'left' as const,
       render: (_: any, record: PaymentRecord, index: number) => (
         <InputNumber
-          min={0}
+          min={0} precision={0}
           max={24}
           value={record.paymentMonths}
           onChange={(value) => {
@@ -176,15 +176,15 @@ const PaymentRecord = () => {
       dataIndex: 'monthlySalary',
       key: 'monthlySalary',
       width: 120,
-      align: 'center',
+      align: 'center' as const,
       render: (_: any, record: PaymentRecord, index: number) => (
         <InputNumber
-          min={0}
+          min={0} precision={0}
           value={record.monthlySalary}
           onChange={(value) => updateRecord(index, { monthlySalary: value || 0 })}
           style={{ width: '90%' }}
           formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-          parser={value => value!.replace(/\$\s?|(,*)/g, '')}
+          parser={value => Number(value!.replace(/\$\s?|(,*)/g, ''))}
         />
       )
     },
@@ -193,15 +193,15 @@ const PaymentRecord = () => {
       dataIndex: 'yearlyPayment',
       key: 'yearlyPayment',
       width: 120,
-      align: 'center',
+      align: 'center' as const,
       render: (_: any, record: PaymentRecord, index: number) => (
         <InputNumber
-          min={0}
+          min={0} precision={0}
           value={record.yearlyPayment}
           onChange={(value) => updateRecord(index, { yearlyPayment: value || 0 })}
           style={{ width: '90%' }}
           formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-          parser={value => value!.replace(/\$\s?|(,*)/g, '')}
+          parser={value => Number(value!.replace(/\$\s?|(,*)/g, ''))}
         />
       )
     },
@@ -210,11 +210,12 @@ const PaymentRecord = () => {
       dataIndex: 'paymentIndex',
       key: 'paymentIndex',
       width: 120,
-      align: 'center'
+      align: 'center' as const
     },
     {
       title: '操作',
       key: 'action',
+      align: 'center' as const,
       render: (_: any, _record: PaymentRecord, index: number) => (
         <Button type="link" onClick={() => copyToBelow(index)}>
           以下相同
@@ -254,7 +255,7 @@ const PaymentRecord = () => {
             rowKey="year"
             pagination={false}
             bordered
-            scroll={{ y: true }}
+            scroll={{ x: 'max-content', y: 500 }}
             sticky
           />
         </div>
