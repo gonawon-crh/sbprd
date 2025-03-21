@@ -114,31 +114,6 @@ const Result = () => {
     return details;
   };
 
-  const columns = [
-    { title: '年份', dataIndex: 'year', key: 'year' },
-    {
-      title: '上年度社会平均工资',
-      dataIndex: 'socialAverageSalary',
-      key: 'socialAverageSalary',
-      render: (value: number) => `${value}(预估)`
-    },
-    {
-      title: '基础养老金',
-      dataIndex: 'basicPension',
-      key: 'basicPension'
-    },
-    {
-      title: '个人账户养老金',
-      dataIndex: 'personalAccountPension',
-      key: 'personalAccountPension'
-    },
-    {
-      title: '月退休工资',
-      dataIndex: 'monthlyPension',
-      key: 'monthlyPension'
-    }
-  ];
-
   return (
     <div style={{ padding: '24px', maxWidth: '1200px', margin: '0 auto', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Title level={2} style={{ textAlign: 'center', marginBottom: '32px', paddingTop: '24px' }}>养老金计算结果</Title>
